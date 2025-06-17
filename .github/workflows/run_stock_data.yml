@@ -22,7 +22,7 @@ jobs:
       run: pip install yfinance pandas
 
     - name: Run stock script
-      run: python stock_data.py
+      run: python tracker_for_current_100.py
 
     - name: Commit updated CSV
       run: |
