@@ -1,0 +1,33 @@
+name: Run Stock Script Every 5 Min
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Every 5 minutes
+  workflow_dispatch:        # Allow manual run
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install yfinance pandas
+
+    - name: Run stock script
+      run: python stock_data.py
+
+    - name: Commit updated CSV
+      run: |
+        git config --global user.email "ashah4461@sdsu.edu"
+        git config --global user.name "angana04"
+        git add stock_data.csv
+        git commit -m "Update CSV"
+        git push
